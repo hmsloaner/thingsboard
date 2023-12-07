@@ -340,7 +340,7 @@ public class BaseImageService extends BaseResourceService implements ImageServic
                 if (node == null) {
                     continue;
                 }
-                if (token.equals("*") || token.startsWith("$")) {
+                if ("*".equals(token) || token.startsWith("$")) {
                     String variableName = token.startsWith("$") ? token.substring(1) : null;
                     if (node.isArray()) {
                         ArrayNode childArray = (ArrayNode) node;

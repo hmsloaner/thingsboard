@@ -270,9 +270,9 @@ public class ImageController extends BaseController {
 
     private TenantId getTenantId(String imageType) throws ThingsboardException {
         TenantId tenantId;
-        if (imageType.equals(TENANT_IMAGE)) {
+        if (TENANT_IMAGE.equals(imageType)) {
             tenantId = getTenantId();
-        } else if (imageType.equals(SYSTEM_IMAGE)) {
+        } else if (SYSTEM_IMAGE.equals(imageType)) {
             tenantId = TenantId.SYS_TENANT_ID;
         } else {
             throw new IllegalArgumentException("Invalid image URL");

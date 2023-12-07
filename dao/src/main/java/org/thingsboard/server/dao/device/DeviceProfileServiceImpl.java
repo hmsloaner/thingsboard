@@ -270,7 +270,7 @@ public class DeviceProfileServiceImpl extends AbstractCachedEntityService<Device
         DeviceProfile deviceProfile = findDeviceProfileByName(tenantId, name, false);
         if (deviceProfile == null) {
             try {
-                deviceProfile = this.doCreateDefaultDeviceProfile(tenantId, name, name.equals("default"));
+                deviceProfile = this.doCreateDefaultDeviceProfile(tenantId, name, "default".equals(name));
             } catch (DataValidationException e) {
                 if (DEVICE_PROFILE_WITH_SUCH_NAME_ALREADY_EXISTS.equals(e.getMessage())) {
                     deviceProfile = findDeviceProfileByName(tenantId, name, false);
