@@ -112,7 +112,7 @@ public class ThingsboardInstallService {
                 } else if ("3.0.1-cassandra".equals(upgradeFromVersion)) {
                     log.info("Migrating ThingsBoard latest timeseries data from cassandra to SQL database ...");
                     latestMigrateService.migrate();
-                } else if (upgradeFromVersion.equals("3.6.2-images")) {
+                } else if ("3.6.2-images".equals(upgradeFromVersion)) {
                     installScripts.updateImages();
                 } else {
                     switch (upgradeFromVersion) {

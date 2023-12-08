@@ -68,7 +68,7 @@ public class ImageUtils {
     }
 
     public static ProcessedImage processImage(byte[] data, String mediaType, int thumbnailMaxDimension) throws Exception {
-        if (mediaTypeToFileExtension(mediaType).equals("svg")) {
+        if ("svg".equals(mediaTypeToFileExtension(mediaType))) {
             return processSvgImage(data, mediaType, thumbnailMaxDimension);
         }
         ProcessedImage image = new ProcessedImage();
@@ -121,7 +121,7 @@ public class ImageUtils {
         preview.setHeight(thumbnailDimensions[1]);
 
         if (preview.getWidth() == image.getWidth() && preview.getHeight() == image.getHeight()) {
-            if (mediaType.equals("image/png")) {
+            if ("image/png".equals(mediaType)) {
                 preview.setMediaType(mediaType);
                 preview.setData(null);
                 preview.setSize(data.length);
