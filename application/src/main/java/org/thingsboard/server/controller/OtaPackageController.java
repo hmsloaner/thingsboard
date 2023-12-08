@@ -24,7 +24,10 @@ import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -83,7 +86,7 @@ public class OtaPackageController extends BaseController {
 
     @ApiOperation(value = "Download OTA Package (downloadOtaPackage)", notes = "Download OTA Package based on the provided OTA Package Id." + TENANT_AUTHORITY_PARAGRAPH)
     @PreAuthorize("hasAnyAuthority( 'TENANT_ADMIN')")
-    @RequestMapping(value = "/otaPackage/{otaPackageId}/download", method = RequestMethod.GET)
+    @GetMapping(value = "/otaPackage/{otaPackageId}/download")
     @ResponseBody
     public ResponseEntity<org.springframework.core.io.Resource> downloadOtaPackage(@ApiParam(value = OTA_PACKAGE_ID_PARAM_DESCRIPTION)
                                                                                    @PathVariable(OTA_PACKAGE_ID) String strOtaPackageId) throws ThingsboardException {
@@ -109,7 +112,7 @@ public class OtaPackageController extends BaseController {
                     OTA_PACKAGE_INFO_DESCRIPTION + TENANT_OR_CUSTOMER_AUTHORITY_PARAGRAPH,
             produces = APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAnyAuthority('TENANT_ADMIN', 'CUSTOMER_USER')")
-    @RequestMapping(value = "/otaPackage/info/{otaPackageId}", method = RequestMethod.GET)
+    @GetMapping(value = "/otaPackage/info/{otaPackageId}")
     @ResponseBody
     public OtaPackageInfo getOtaPackageInfoById(@ApiParam(value = OTA_PACKAGE_ID_PARAM_DESCRIPTION)
                                                 @PathVariable(OTA_PACKAGE_ID) String strOtaPackageId) throws ThingsboardException {
@@ -123,7 +126,7 @@ public class OtaPackageController extends BaseController {
                     "The server checks that the OTA Package is owned by the same tenant. " + OTA_PACKAGE_DESCRIPTION + TENANT_AUTHORITY_PARAGRAPH,
             produces = APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAnyAuthority('TENANT_ADMIN')")
-    @RequestMapping(value = "/otaPackage/{otaPackageId}", method = RequestMethod.GET)
+    @GetMapping(value = "/otaPackage/{otaPackageId}")
     @ResponseBody
     public OtaPackage getOtaPackageById(@ApiParam(value = OTA_PACKAGE_ID_PARAM_DESCRIPTION)
                                         @PathVariable(OTA_PACKAGE_ID) String strOtaPackageId) throws ThingsboardException {
@@ -141,7 +144,7 @@ public class OtaPackageController extends BaseController {
             produces = APPLICATION_JSON_VALUE,
             consumes = APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAnyAuthority('TENANT_ADMIN')")
-    @RequestMapping(value = "/otaPackage", method = RequestMethod.POST)
+    @PostMapping(value = "/otaPackage")
     @ResponseBody
     public OtaPackageInfo saveOtaPackageInfo(@ApiParam(value = "A JSON value representing the OTA Package.")
                                              @RequestBody SaveOtaPackageInfoRequest otaPackageInfo) throws ThingsboardException {
@@ -156,7 +159,7 @@ public class OtaPackageController extends BaseController {
             produces = APPLICATION_JSON_VALUE,
             consumes = MULTIPART_FORM_DATA_VALUE)
     @PreAuthorize("hasAnyAuthority('TENANT_ADMIN')")
-    @RequestMapping(value = "/otaPackage/{otaPackageId}", method = RequestMethod.POST, consumes = MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/otaPackage/{otaPackageId}", consumes = MULTIPART_FORM_DATA_VALUE)
     @ResponseBody
     public OtaPackageInfo saveOtaPackageData(@ApiParam(value = OTA_PACKAGE_ID_PARAM_DESCRIPTION)
                                              @PathVariable(OTA_PACKAGE_ID) String strOtaPackageId,
@@ -181,7 +184,7 @@ public class OtaPackageController extends BaseController {
                     PAGE_DATA_PARAMETERS + OTA_PACKAGE_INFO_DESCRIPTION + TENANT_OR_CUSTOMER_AUTHORITY_PARAGRAPH,
             produces = APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAnyAuthority('TENANT_ADMIN', 'CUSTOMER_USER')")
-    @RequestMapping(value = "/otaPackages", method = RequestMethod.GET)
+    @GetMapping(value = "/otaPackages")
     @ResponseBody
     public PageData<OtaPackageInfo> getOtaPackages(@ApiParam(value = PAGE_SIZE_DESCRIPTION, required = true)
                                                    @RequestParam int pageSize,
@@ -202,7 +205,7 @@ public class OtaPackageController extends BaseController {
                     PAGE_DATA_PARAMETERS + OTA_PACKAGE_INFO_DESCRIPTION + TENANT_OR_CUSTOMER_AUTHORITY_PARAGRAPH,
             produces = APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAnyAuthority('TENANT_ADMIN', 'CUSTOMER_USER')")
-    @RequestMapping(value = "/otaPackages/{deviceProfileId}/{type}", method = RequestMethod.GET)
+    @GetMapping(value = "/otaPackages/{deviceProfileId}/{type}")
     @ResponseBody
     public PageData<OtaPackageInfo> getOtaPackages(@ApiParam(value = DEVICE_PROFILE_ID_PARAM_DESCRIPTION)
                                                    @PathVariable("deviceProfileId") String strDeviceProfileId,
@@ -230,7 +233,7 @@ public class OtaPackageController extends BaseController {
                     "Can't delete the OTA Package if it is referenced by existing devices or device profile." + TENANT_AUTHORITY_PARAGRAPH,
             produces = APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAnyAuthority('TENANT_ADMIN')")
-    @RequestMapping(value = "/otaPackage/{otaPackageId}", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/otaPackage/{otaPackageId}")
     @ResponseBody
     public void deleteOtaPackage(@ApiParam(value = OTA_PACKAGE_ID_PARAM_DESCRIPTION)
                                  @PathVariable("otaPackageId") String strOtaPackageId) throws ThingsboardException {
