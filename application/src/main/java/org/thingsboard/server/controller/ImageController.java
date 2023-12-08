@@ -16,6 +16,7 @@
 package org.thingsboard.server.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import io.github.pixee.security.Filenames;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -95,11 +96,11 @@ public class ImageController extends BaseController {
         image.setTenantId(user.getTenantId());
         accessControlService.checkPermission(user, Resource.TB_RESOURCE, Operation.CREATE, null, image);
 
-        image.setFileName(file.getOriginalFilename());
+        image.setFileName(Filenames.toSimpleFileName(file.getOriginalFilename()));
         if (StringUtils.isNotEmpty(title)) {
             image.setTitle(title);
         } else {
-            image.setTitle(file.getOriginalFilename());
+            image.setTitle(Filenames.toSimpleFileName(file.getOriginalFilename()));
         }
         image.setResourceType(ResourceType.IMAGE);
         ImageDescriptor descriptor = new ImageDescriptor();
@@ -117,7 +118,7 @@ public class ImageController extends BaseController {
         TbResourceInfo imageInfo = checkImageInfo(type, key, Operation.WRITE);
         TbResource image = new TbResource(imageInfo);
         image.setData(file.getBytes());
-        image.setFileName(file.getOriginalFilename());
+        image.setFileName(Filenames.toSimpleFileName(file.getOriginalFilename()));
         image.updateDescriptor(ImageDescriptor.class, descriptor -> {
             descriptor.setMediaType(file.getContentType());
             return descriptor;
